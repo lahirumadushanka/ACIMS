@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"      
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="sb-admin-2.css"/>
+        <title>Facelets Template</title>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../css/bootstrap.css" rel="stylesheet"/>
+
+        <!-- MetisMenu CSS -->
+        <link href="../css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet"/>
+
+        <!-- Custom CSS -->
+        <link href="../css/sb-admin-2.css" rel="stylesheet"/>
+
+        <!-- Custom Fonts -->
+        <link href="../font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Social Buttons CSS -->
+        <link href="../css/plugins/social-buttons.css" rel="stylesheet"/>
+    </h:head>
+
+    <h:body>
+        <p:growl id="growl" life="3000" />
+
+        <!--        <p:ajaxStatus style="position: absolute; width:28px;height:28px;position:fixed;right: 60px;top: 25px">
+        
+                    <f:facet name="start">  
+                        <p:graphicImage library="image" name="loader.gif" />  
+                    </f:facet>  
+        
+                    <f:facet name="complete">  
+                        <h:outputText value="" />  
+                    </f:facet>
+        
+                </p:ajaxStatus>-->
+
+        <ui:insert name="top">
+<!--            <h:panelGroup  rendered="#{sessionController.logged}" style="margin: 0px; padding: 0px; border: 0px;" >
+                <h:form >                            
+                    <p:menubar styleClass="nonPrintBlock">
+                        <p:menuitem value="Home" icon="ui-icon-home" action="index"/>
+                        <p:submenu label="Administration" icon="ui-icon-gear">
+                            <p:menuitem value="Manage person" ></p:menuitem>
+                            <p:menuitem value="Web User"></p:menuitem>
+                            <p:menuitem value="Meal Type"></p:menuitem>
+                            <p:menuitem value="Ration"></p:menuitem>
+                        </p:submenu>
+                    </p:menubar>                            
+                </h:form>
+            </h:panelGroup>-->
+            <h:form>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h:commandButton action="#{sessionController.logout}" rendered="#{sessionController.logged}" value="Logout" styleClass="btn btn-danger" style="float: right;">
+                            <f:ajax disabled="true"/>
+                        </h:commandButton> 
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+
+            </h:form>
+        </ui:insert>
+
+
+
+        <h:panelGroup rendered="#{sessionController.logged}">
+            <ui:insert name="content">
+            </ui:insert>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{!sessionController.logged}">
+            <ui:insert name="login">
+                <h:form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <div class="login-panel panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Please Sign In</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <h:inputText id="un" value="#{sessionController.userName}" autocomplete="off" styleClass="form-control" pt:placeholder="UserName"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <h:inputSecret id="pw" value="#{sessionController.password}"  autocomplete="off" styleClass="form-control" pt:placeholder="Password"/>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input name="remember" type="checkbox" value="Remember Me"/>Remember Me
+                                            </label>
+                                        </div>
+                                        <h:commandButton action="#{sessionController.loginAction}"  styleClass="btn btn-lg btn-success btn-block" value="Login">
+                                            <f:ajax disabled="true"/>                                            
+                                        </h:commandButton>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:insert>
+        </h:panelGroup>
+
+
+
+        <ui:insert name="bottom">
+
+        </ui:insert>
+        <!-- jQuery Version 1.11.0 -->
+        <script src="../js/jquery-1.11.0.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../js/plugins/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="../js/sb-admin-2.js"></script>
+
+
+
+    </h:body>
+
+</html>
