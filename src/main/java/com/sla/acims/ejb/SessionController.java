@@ -44,6 +44,8 @@ public class SessionController implements Serializable {
     private WebUser loggedUser = null;
     boolean logged = false;
     boolean activated = false;
+    private boolean idA = false;
+    private boolean imsA = false;
     private String userName;
     private String password;
     private DirContext dirContext = null;
@@ -87,11 +89,7 @@ public class SessionController implements Serializable {
             JsfUtil.addErrorMessage("Please enter a username");
             System.out.println("login bool");
             return false;
-        } //        if (isFirstVisit()) {
-        //            prepareFirstVisit();
-        //            return true;
-        //        } 
-        else {
+        } else {
             return checkUsers();
         }
     }
@@ -200,6 +198,7 @@ public class SessionController implements Serializable {
                         System.out.println("if 02");
 //                        setLoggedUser(u);
                         setLogged(Boolean.TRUE);
+//                        checkPrivilegeId(userName);
 //                    setActivated(u.isActivated());
                         return true;
                     }
@@ -208,6 +207,48 @@ public class SessionController implements Serializable {
         } catch (Exception exception) {
         }
         return false;
+    }
+
+    public String checkPrivilegeId(String uName) {
+        System.out.println("check Privilege ID");
+        try {
+            String searchDn = "uid=" + uName + "," + "ou=Admin,ou=aidms,ou=apps,ou=permission,dc=test,dc=com";
+            // uid=142,ou=alzebra,dc=mathsdep,dc=college,dc=org,dc=in
+            System.out.println("searchDn = " + searchDn);
+            SearchControls searchControls = new SearchControls();
+            searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+            NamingEnumeration results2 = dirContext.search(searchDn, "(uid=" + userName + ")", searchControls);
+
+            if (results2.hasMore()) {
+                System.out.println("has no results");
+                setIdA(true);
+                return "";
+            }
+
+        } catch (Exception exception) {
+        }
+        return "";
+    }
+    
+    public String checkPrivilegeIms(String uName) {
+        System.out.println("check Privilege Ims");
+        try {
+            String searchDn = "uid=" + uName + "," + "ou=Admin,ou=aidms,ou=apps,ou=permission,dc=test,dc=com";
+            // uid=142,ou=alzebra,dc=mathsdep,dc=college,dc=org,dc=in
+            System.out.println("searchDn = " + searchDn);
+            SearchControls searchControls = new SearchControls();
+            searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+            NamingEnumeration results2 = dirContext.search(searchDn, "(uid=" + userName + ")", searchControls);
+
+            if (results2.hasMore()) {
+                System.out.println("has no results");
+                setIdA(true);
+                return "";
+            }
+
+        } catch (Exception exception) {
+        }
+        return "";
     }
 
     public void logout() {
@@ -308,6 +349,22 @@ public class SessionController implements Serializable {
     }
 
     protected void initializeEmbeddableKey() {
+    }
+
+    public boolean isIdA() {
+        return idA;
+    }
+
+    public void setIdA(boolean idA) {
+        this.idA = idA;
+    }
+
+    public boolean isImsA() {
+        return imsA;
+    }
+
+    public void setImsA(boolean imsA) {
+        this.imsA = imsA;
     }
 
 }
